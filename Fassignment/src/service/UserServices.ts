@@ -1,5 +1,6 @@
 import { UserModel } from "../model";
 import { UserInterface } from "../types";
+import { hashPassword } from "../utils";
 
 export class UserServices {
     async registerUser(
@@ -14,11 +15,20 @@ export class UserServices {
                 age,
                 gender,
                 isActive: true,
-                password
+                password: hashPassword(password)
             });
 
             return user.toObject();
         }
+
+    async getUserByEmail(emailObj: { email: string }): Promise<UserInterface | null> {
+        const { email } = emailObj;
+        const user = await UserModel.findOne({ email });
+
+        if (!user) return null;
+
+        return user.toObject();
+    }
 }
 
 export const userService = new UserServices;
