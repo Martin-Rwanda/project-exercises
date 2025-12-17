@@ -24,13 +24,16 @@ export class AuthController {
       if (!passwordMatch) {
         return res.status(401).json({ message: "Invalid email or password" });
       }
-      const token = await authService.login({ _id: user._id.toString(), role: user.role || ''});
+
+      const token = await authService.login({
+        id: user._id.toString(),
+        role: user.role || '',
+      });
 
       return res.status(200).json({
         message: "Login successful",
         data: { token },
       });
-
     } catch (error: any) {
       console.error(error);
       return res.status(500).json({ message: "Internal server error" });
@@ -48,6 +51,7 @@ export class AuthController {
       if (!token) {
         return res.status(400).json({ message: "Token missing" });
       }
+
       await authService.logout(token);
 
       return res.status(200).json({ message: "Logout successful" });
@@ -58,4 +62,4 @@ export class AuthController {
   }
 }
 
-export const authController = new AuthController
+export const authController = new AuthController();

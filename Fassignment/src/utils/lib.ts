@@ -18,13 +18,24 @@ interface GenerateTokenPayload {
     role: string
 }
 
-export const generateToken = async ({id, role}: GenerateTokenPayload) => {
-    return jwt.sign(
-        {
-            sub: id,
-            role,
-        },
-        config.jwtSecret,
-        { expiresIn: '1hr'}
-    )
-}
+// export const generateToken = async ({id, role}: GenerateTokenPayload) => {
+//     return jwt.sign(
+//         {
+//             sub: id,
+//             role,
+//         },
+//         config.jwtSecret,
+//         { expiresIn: 3600}
+//     )
+// }
+
+export const generateToken = async ({ id, role }: GenerateTokenPayload) => {
+  return jwt.sign(
+    {
+      sub: id,   
+      role       
+    },
+    config.jwtSecret,
+    { expiresIn: "1h" }
+  );
+};

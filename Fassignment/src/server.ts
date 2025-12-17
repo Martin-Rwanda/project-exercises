@@ -1,9 +1,10 @@
+import {config as DotEnv} from 'dotenv';
+DotEnv();
+
 import express, { Express } from "express";
 import cors from 'cors';
-import {config as DotEnv} from 'dotenv';
 import { databaseConnection, config } from "./config";
 import { mainApp } from "./routes";
-DotEnv();
 
 const app: Express = express();
 app.use(cors());
