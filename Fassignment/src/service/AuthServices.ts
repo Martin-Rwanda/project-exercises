@@ -1,15 +1,16 @@
+import { config } from "../config";
 import jwt from "jsonwebtoken";
 import { BlackListedToken } from "../model";
-import { config } from "../config";
 
 interface LoginPayload {
-  id: string;
+  sub: string;
   role: string;
 }
 export class AuthService {
   async login(user: LoginPayload): Promise<string> {
+    console.log(`USER-ID: ${user.sub} and USER-ROLE: ${user.role}  CONFIG-SECRET: ${config.jwtSecret}`) //Testing
     return jwt.sign(
-      { sub: user.id, role: user.role },
+      { sub: user.sub, role: user.role },
       config.jwtSecret,
       { expiresIn: "1h" }
     );

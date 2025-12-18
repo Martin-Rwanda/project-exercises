@@ -26,10 +26,10 @@ export class AuthController {
       }
 
       const token = await authService.login({
-        id: user._id.toString(),
+        sub: user._id,
         role: user.role || '',
       });
-
+      console.log(`LOGIN ROUTER  USER_ID: ${user._id}  USER-ROLE: ${user.role}`) //testing
       return res.status(200).json({
         message: "Login successful",
         data: { token },

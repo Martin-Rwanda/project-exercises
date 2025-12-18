@@ -1,41 +1,32 @@
-import * as bycrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
-import { config } from '../config';
+import { config } from "../config";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const hashPassword = (password: string): string => {
-    return bycrypt.hashSync(password, 10);
-}
+  return bcrypt.hashSync(password, 10);
+};
 
 export const comparePassword = async (
-    db_password: string,
-    password: string
+  dbPassword: string,
+  password: string
 ): Promise<boolean> => {
-    return await bycrypt.compare(password, db_password);
-}
+  return bcrypt.compare(password, dbPassword);
+};
 
 interface GenerateTokenPayload {
-    id: string,
-    role: string
+  id: string;
+  role: string;
 }
 
-// export const generateToken = async ({id, role}: GenerateTokenPayload) => {
-//     return jwt.sign(
-//         {
-//             sub: id,
-//             role,
-//         },
-//         config.jwtSecret,
-//         { expiresIn: 3600}
-//     )
-// }
-
-export const generateToken = async ({ id, role }: GenerateTokenPayload) => {
+export const generateToken = ({ id, role }: GenerateTokenPayload): string => {
   return jwt.sign(
     {
-      sub: id,   
-      role       
+      sub: id,
+      role,
     },
     config.jwtSecret,
-    { expiresIn: "1h" }
+    {
+      expiresIn: "1h",
+    }
   );
 };

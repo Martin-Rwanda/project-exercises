@@ -26,7 +26,7 @@ export class AttendanceController {
       if (user?.role === "admin") {
         data = await attendanceService.getAllAttendance();
       } else {
-        data = await attendanceService.getAttendanceForUser(user!.id as any);
+        data = await attendanceService.getAttendanceForUser(user!.sub as any);
       }
 
       return res.status(200).json({ success: true, data });

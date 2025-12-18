@@ -29,6 +29,11 @@ export class UserServices {
 
         return user.toObject();
     }
+
+    getStudents = async () => {
+        const student = await UserModel.find().select('-password').exec();
+        return student;
+    }
 }
 
 export const userService = new UserServices;

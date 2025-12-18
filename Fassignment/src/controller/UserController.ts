@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { userService } from "../service";
 import { CreateUserInterfaceRequest } from "../types";
+import { AuthRequest } from "../middleware";
 
 export class UserController {
     async registerUser(req: CreateUserInterfaceRequest, res: Response) {
@@ -27,6 +28,14 @@ export class UserController {
                 message: error.message
             });
         }
+    }
+
+    async getStudents(req:AuthRequest, res:Response): Promise<any>{
+        const student = await userService.getStudents();
+        return res.status(200).json({
+            message: 'Fetched well',
+            data: student
+        })
     }
 }
 

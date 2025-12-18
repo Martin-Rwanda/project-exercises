@@ -5,7 +5,7 @@ import { AuthRequest } from "../middleware/AuthMiddleware";
 export class LeaveController {
   async requestLeave(req: AuthRequest, res: Response) {
     try {
-        const userId = req.user!.id;
+        const userId = req.user!.sub;
         const { reason } = req.body;
 
         const leave = await leaveService.requestLeave(userId, reason);
@@ -31,7 +31,7 @@ export class LeaveController {
       if (user?.role === "admin") {
         data = await leaveService.getAllLeaveRequests();
       } else {
-        data = await leaveService.getLeaveRequestsForUser(user!.id as any);
+        data = await leaveService.getLeaveRequestsForUser(user!.sub as any);
       }
 
       return res.status(200).json({ success: true, data });

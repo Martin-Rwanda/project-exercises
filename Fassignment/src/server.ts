@@ -1,6 +1,6 @@
 import {config as DotEnv} from 'dotenv';
 DotEnv();
-
+import { swaggerDocs } from "./swagger";
 import express, { Express } from "express";
 import cors from 'cors';
 import { databaseConnection, config } from "./config";
@@ -9,7 +9,7 @@ import { mainApp } from "./routes";
 const app: Express = express();
 app.use(cors());
 app.use(express.json());
-
+swaggerDocs(app);
 app.use(mainApp);
 
 const startServer = async () => {
